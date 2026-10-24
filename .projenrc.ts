@@ -9,7 +9,7 @@ const project = new ProjenJsiiProject({
     'aws-cdk-lib@^2.232.0',
   ],
   devDeps: [
-    '@gammarers/projen-projects@^0.6.0',
+    '@gammarers/projen-projects@^0.6.1',
   ],
   keywords: [
     'aws',
