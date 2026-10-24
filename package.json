@@ -1,6 +1,6 @@
 {
   "name": "construct-resource-criteria",
-  "description": "Assertion helpers that reject blank strings and empty or blank string lists for CDK construct resource criteria.",
+  "description": "Helpers for CDK construct resource criteria, including ConstructResourceTagCriteria validation.",
   "repository": {
     "type": "git",
     "url": "https://github.com/higa/aws-cdk-construct-resource-criteria.git"

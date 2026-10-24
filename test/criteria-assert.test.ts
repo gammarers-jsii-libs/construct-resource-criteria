@@ -1,0 +1,50 @@
+import { CriteriaAssert } from '../src/criteria-assert';
+
+describe('CriteriaAssert.nonBlankString', () => {
+  it.each([
+    ['plain', 'ok'],
+    ['with surrounding spaces', '  ok  '],
+  ])('accepts %s', (_label, value) => {
+    expect(() =>
+      CriteriaAssert.nonBlankString(value, { propPath: 'props.name' }),
+    ).not.toThrow();
+  });
+
+  it.each([
+    ['empty', ''],
+    ['whitespace-only', '   '],
+    ['tabs and newlines', '\t\n'],
+  ])('rejects %s', (_label, value) => {
+    expect(() =>
+      CriteriaAssert.nonBlankString(value, { propPath: 'props.name' }),
+    ).toThrow('props.name must be a non-blank string.');
+  });
+});
+
+describe('CriteriaAssert.nonEmptyStringList', () => {
+  it.each([
+    ['single value', ['ok']],
+    ['multiple values', ['a', 'b']],
+    ['value with surrounding spaces', ['  ok  ']],
+  ])('accepts %s', (_label, values) => {
+    expect(() =>
+      CriteriaAssert.nonEmptyStringList(values, { propPath: 'props.names' }),
+    ).not.toThrow();
+  });
+
+  it('rejects an empty list', () => {
+    expect(() =>
+      CriteriaAssert.nonEmptyStringList([], { propPath: 'props.names' }),
+    ).toThrow('props.names must contain at least one value.');
+  });
+
+  it.each([
+    ['empty element', ['ok', '']],
+    ['whitespace-only element', ['  ']],
+    ['blank among values', ['a', '\t', 'b']],
+  ])('rejects %s', (_label, values) => {
+    expect(() =>
+      CriteriaAssert.nonEmptyStringList(values, { propPath: 'props.names' }),
+    ).toThrow('props.names must not contain blank strings.');
+  });
+});
