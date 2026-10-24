@@ -11,7 +11,7 @@ export interface AssertPropOptions {
 }
 
 /** True when the string is empty or whitespace-only. */
-const isBlankText = (value: string): boolean => 
+const isBlankText = (value: string): boolean =>
   !Token.isUnresolved(value) && value.trim().length === 0;
 
 /**
