@@ -1,9 +1,9 @@
 import { Token } from 'aws-cdk-lib';
 
 /**
- * Options for prop-path assertion helpers.
+ * Options for internal prop-path assertion helpers.
  */
-export interface AssertPropOptions {
+interface CriteriaAssertPropOptions {
   /**
    * Property path included in the error message (for example, `props.name`).
    */
@@ -15,19 +15,21 @@ const isBlankText = (value: string): boolean =>
   !Token.isUnresolved(value) && value.trim().length === 0;
 
 /**
- * Assertion helpers that reject blank strings and empty or blank string lists.
+ * Internal assertion helpers for non-blank strings and string lists.
+ *
+ * Not part of the package public API.
  */
-export class Assert {
+export class CriteriaAssert {
   /**
    * Throws if `value` is empty or whitespace-only.
    *
    * @param value - Candidate string.
-   * @param options - {@link AssertPropOptions} for the error message path.
+   * @param options - Options for the error message path.
    * @throws Error when `value` is blank.
    */
   public static nonBlankString(
     value: string,
-    options: AssertPropOptions,
+    options: CriteriaAssertPropOptions,
   ): void {
     if (isBlankText(value)) {
       throw new Error(`${options.propPath} must be a non-blank string.`);
@@ -38,12 +40,12 @@ export class Assert {
    * Throws if `values` is empty or any element is blank.
    *
    * @param values - Candidate string list.
-   * @param options - {@link AssertPropOptions} for the error message path.
+   * @param options - Options for the error message path.
    * @throws Error when the list is empty or contains a blank string.
    */
   public static nonEmptyStringList(
     values: string[],
-    options: AssertPropOptions,
+    options: CriteriaAssertPropOptions,
   ): void {
     if (values.length === 0) {
       throw new Error(`${options.propPath} must contain at least one value.`);

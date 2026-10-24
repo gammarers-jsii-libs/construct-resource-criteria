@@ -3,50 +3,98 @@
 
 ## Structs <a name="Structs" id="Structs"></a>
 
-### AssertPropOptions <a name="AssertPropOptions" id="construct-resource-criteria.AssertPropOptions"></a>
+### ConstructResourceCriteriaAssertOptions <a name="ConstructResourceCriteriaAssertOptions" id="construct-resource-criteria.ConstructResourceCriteriaAssertOptions"></a>
 
-Options for prop-path assertion helpers.
+Options for {@link ConstructResourceCriteria} assertion helpers.
 
-#### Initializer <a name="Initializer" id="construct-resource-criteria.AssertPropOptions.Initializer"></a>
+#### Initializer <a name="Initializer" id="construct-resource-criteria.ConstructResourceCriteriaAssertOptions.Initializer"></a>
 
 ```typescript
-import { AssertPropOptions } from 'construct-resource-criteria'
+import { ConstructResourceCriteriaAssertOptions } from 'construct-resource-criteria'
 
-const assertPropOptions: AssertPropOptions = { ... }
+const constructResourceCriteriaAssertOptions: ConstructResourceCriteriaAssertOptions = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#construct-resource-criteria.AssertPropOptions.property.propPath">propPath</a></code> | <code>string</code> | Property path included in the error message (for example, `props.name`). |
+| <code><a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions.property.propPath">propPath</a></code> | <code>string</code> | Property path included in the error message (for example, `tagCriteria`). |
 
 ---
 
-##### `propPath`<sup>Required</sup> <a name="propPath" id="construct-resource-criteria.AssertPropOptions.property.propPath"></a>
+##### `propPath`<sup>Optional</sup> <a name="propPath" id="construct-resource-criteria.ConstructResourceCriteriaAssertOptions.property.propPath"></a>
 
 ```typescript
 public readonly propPath: string;
 ```
 
 - *Type:* string
+- *Default:* tagCriteria
 
-Property path included in the error message (for example, `props.name`).
+Property path included in the error message (for example, `tagCriteria`).
+
+---
+
+### ConstructResourceTagCriteria <a name="ConstructResourceTagCriteria" id="construct-resource-criteria.ConstructResourceTagCriteria"></a>
+
+Tag key/value criteria used to match resources.
+
+#### Initializer <a name="Initializer" id="construct-resource-criteria.ConstructResourceTagCriteria.Initializer"></a>
+
+```typescript
+import { ConstructResourceTagCriteria } from 'construct-resource-criteria'
+
+const constructResourceTagCriteria: ConstructResourceTagCriteria = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#construct-resource-criteria.ConstructResourceTagCriteria.property.tagKey">tagKey</a></code> | <code>string</code> | Tag key to match (for example, `Environment` or `AutoStartPrevent`). |
+| <code><a href="#construct-resource-criteria.ConstructResourceTagCriteria.property.tagValues">tagValues</a></code> | <code>string[]</code> | Allowed tag values (for example, `["production"]` or `["YES"]`). |
+
+---
+
+##### `tagKey`<sup>Required</sup> <a name="tagKey" id="construct-resource-criteria.ConstructResourceTagCriteria.property.tagKey"></a>
+
+```typescript
+public readonly tagKey: string;
+```
+
+- *Type:* string
+
+Tag key to match (for example, `Environment` or `AutoStartPrevent`).
+
+---
+
+##### `tagValues`<sup>Required</sup> <a name="tagValues" id="construct-resource-criteria.ConstructResourceTagCriteria.property.tagValues"></a>
+
+```typescript
+public readonly tagValues: string[];
+```
+
+- *Type:* string[]
+
+Allowed tag values (for example, `["production"]` or `["YES"]`).
+
+At least one value is required.
 
 ---
 
 ## Classes <a name="Classes" id="Classes"></a>
 
-### Assert <a name="Assert" id="construct-resource-criteria.Assert"></a>
+### ConstructResourceCriteria <a name="ConstructResourceCriteria" id="construct-resource-criteria.ConstructResourceCriteria"></a>
 
-Assertion helpers that reject blank strings and empty or blank string lists.
+Helpers for construct resource criteria.
 
-#### Initializers <a name="Initializers" id="construct-resource-criteria.Assert.Initializer"></a>
+#### Initializers <a name="Initializers" id="construct-resource-criteria.ConstructResourceCriteria.Initializer"></a>
 
 ```typescript
-import { Assert } from 'construct-resource-criteria'
+import { ConstructResourceCriteria } from 'construct-resource-criteria'
 
-new Assert()
+new ConstructResourceCriteria()
 ```
 
 | **Name** | **Type** | **Description** |
@@ -59,60 +107,33 @@ new Assert()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#construct-resource-criteria.Assert.nonBlankString">nonBlankString</a></code> | Throws if `value` is empty or whitespace-only. |
-| <code><a href="#construct-resource-criteria.Assert.nonEmptyStringList">nonEmptyStringList</a></code> | Throws if `values` is empty or any element is blank. |
+| <code><a href="#construct-resource-criteria.ConstructResourceCriteria.assertTagCriteria">assertTagCriteria</a></code> | Throws if `criteria` has a blank tag key or an empty/blank tag value list. |
 
 ---
 
-##### `nonBlankString` <a name="nonBlankString" id="construct-resource-criteria.Assert.nonBlankString"></a>
+##### `assertTagCriteria` <a name="assertTagCriteria" id="construct-resource-criteria.ConstructResourceCriteria.assertTagCriteria"></a>
 
 ```typescript
-import { Assert } from 'construct-resource-criteria'
+import { ConstructResourceCriteria } from 'construct-resource-criteria'
 
-Assert.nonBlankString(value: string, options: AssertPropOptions)
+ConstructResourceCriteria.assertTagCriteria(criteria: ConstructResourceTagCriteria, options?: ConstructResourceCriteriaAssertOptions)
 ```
 
-Throws if `value` is empty or whitespace-only.
+Throws if `criteria` has a blank tag key or an empty/blank tag value list.
 
-###### `value`<sup>Required</sup> <a name="value" id="construct-resource-criteria.Assert.nonBlankString.parameter.value"></a>
+###### `criteria`<sup>Required</sup> <a name="criteria" id="construct-resource-criteria.ConstructResourceCriteria.assertTagCriteria.parameter.criteria"></a>
 
-- *Type:* string
+- *Type:* <a href="#construct-resource-criteria.ConstructResourceTagCriteria">ConstructResourceTagCriteria</a>
 
-Candidate string.
-
----
-
-###### `options`<sup>Required</sup> <a name="options" id="construct-resource-criteria.Assert.nonBlankString.parameter.options"></a>
-
-- *Type:* <a href="#construct-resource-criteria.AssertPropOptions">AssertPropOptions</a>
-
-{@link AssertPropOptions} for the error message path.
+Tag criteria to validate.
 
 ---
 
-##### `nonEmptyStringList` <a name="nonEmptyStringList" id="construct-resource-criteria.Assert.nonEmptyStringList"></a>
+###### `options`<sup>Optional</sup> <a name="options" id="construct-resource-criteria.ConstructResourceCriteria.assertTagCriteria.parameter.options"></a>
 
-```typescript
-import { Assert } from 'construct-resource-criteria'
+- *Type:* <a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions">ConstructResourceCriteriaAssertOptions</a>
 
-Assert.nonEmptyStringList(values: string[], options: AssertPropOptions)
-```
-
-Throws if `values` is empty or any element is blank.
-
-###### `values`<sup>Required</sup> <a name="values" id="construct-resource-criteria.Assert.nonEmptyStringList.parameter.values"></a>
-
-- *Type:* string[]
-
-Candidate string list.
-
----
-
-###### `options`<sup>Required</sup> <a name="options" id="construct-resource-criteria.Assert.nonEmptyStringList.parameter.options"></a>
-
-- *Type:* <a href="#construct-resource-criteria.AssertPropOptions">AssertPropOptions</a>
-
-{@link AssertPropOptions} for the error message path.
+Assertion options.
 
 ---
 

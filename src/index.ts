@@ -1,1 +1,1 @@
-export * from './assert';
+export * from './construct-resource-criteria';
