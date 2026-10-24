@@ -19,5 +19,6 @@ const project = new ProjenJsiiProject({
     'criteria',
   ],
   releaseToNpm: true,
+  npmTrustedPublishing: true,
 });
 project.synth();
