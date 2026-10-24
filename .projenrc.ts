@@ -4,7 +4,7 @@ const project = new ProjenJsiiProject({
   description:
     'Helpers for CDK construct resource criteria, including ConstructResourceTagCriteria validation.',
   projenrcTs: true,
-  repositoryUrl: 'https://github.com/higa/aws-cdk-construct-resource-criteria.git',
+  repositoryUrl: 'https://github.com/gammarers-jsii-libs/construct-resource-criteria.git',
   deps: [
     'aws-cdk-lib@^2.232.0',
   ],
@@ -18,5 +18,6 @@ const project = new ProjenJsiiProject({
     'resource',
     'criteria',
   ],
+  releaseToNpm: true,
 });
 project.synth();

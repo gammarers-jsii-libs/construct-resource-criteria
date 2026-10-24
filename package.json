@@ -3,7 +3,7 @@
   "description": "Helpers for CDK construct resource criteria, including ConstructResourceTagCriteria validation.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/higa/aws-cdk-construct-resource-criteria.git"
+    "url": "https://github.com/gammarers-jsii-libs/construct-resource-criteria.git"
   },
   "scripts": {
     "build": "projen build",
