@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
 [![license](https://img.shields.io/npm/l/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
 [![Node.js](https://img.shields.io/node/v/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
-[![build](https://img.shields.io/github/actions/workflow/status/higa/aws-cdk-construct-resource-criteria/build.yml?label=build&style=flat-square)](https://github.com/higa/aws-cdk-construct-resource-criteria/actions/workflows/build.yml)
+[![build](https://img.shields.io/github/actions/workflow/status/gammarers-jsii-libs/aws-cdk-construct-resource-criteria/build.yml?label=build&style=flat-square)](https://github.com/gammarers-jsii-libs/aws-cdk-construct-resource-criteria/actions/workflows/build.yml)
 
 Helpers for CDK construct resource criteria. Validate tag key/value criteria and reject blank strings in property paths.
 
