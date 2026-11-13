@@ -10,6 +10,7 @@ Helpers for CDK construct resource criteria. Validate tag key/value criteria and
 ## Features
 
 - Validate `ConstructResourceTagCriteria` tag key and values
+- Validate a list of tag criteria, reject an empty list and duplicate tag keys, and return a copy
 - Reject empty or whitespace-only strings and string lists
 - Include a property path in thrown `Error` messages
 
@@ -50,6 +51,22 @@ ConstructResourceCriteria.assertTagCriteria(criteria);
 ConstructResourceCriteria.assertTagCriteria(criteria, {
   propPath: 'props.tagCriteria',
 });
+
+const criteriaList: ConstructResourceTagCriteria[] = [
+  {
+    tagKey: 'Environment',
+    tagValues: ['production'],
+  },
+  {
+    tagKey: 'Notify',
+    tagValues: ['YES'],
+  },
+];
+
+const resolved = ConstructResourceCriteria.resolveTagCriteria(criteriaList);
+ConstructResourceCriteria.resolveTagCriteria(criteriaList, {
+  propPath: 'props.tags',
+});
 ```
 
 ## Options
@@ -58,7 +75,7 @@ ConstructResourceCriteria.assertTagCriteria(criteria, {
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `propPath` | `string` | Property path included in the error message (default: `tagCriteria`) |
+| `propPath` | `string` | Property path included in the error message. A single object uses a path such as `tagCriteria`. A list uses a path such as `props.tags` (default: `tagCriteria`) |
 
 ## API
 
