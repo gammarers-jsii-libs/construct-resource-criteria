@@ -21,7 +21,10 @@ export interface ConstructResourceTagCriteria {
  */
 export interface ConstructResourceCriteriaAssertOptions {
   /**
-   * Property path included in the error message (for example, `tagCriteria`).
+   * Property path included in the error message.
+   *
+   * A single object uses a path such as `tagCriteria`.
+   * A list uses a path such as `props.tags` (indexed as `props.tags[0]`).
    *
    * @default tagCriteria
    */
@@ -51,5 +54,54 @@ export class ConstructResourceCriteria {
     CriteriaAssert.nonEmptyStringList(criteria.tagValues, {
       propPath: `${propPath}.tagValues`,
     });
+  }
+
+  /**
+   * Validates a tag criteria list and returns a copy.
+   *
+   * Rejects an empty list. Each entry is validated with
+   * {@link ConstructResourceCriteria.assertTagCriteria} before `tagKey` uniqueness
+   * is checked. `tagKey` values must be unique by exact match, without trimming.
+   * The result is a new array of new objects, each with a new `tagValues` array.
+   * The input list is left unchanged.
+   *
+   * @param criteria - Tag criteria list to validate.
+   * @param options - Assertion options. `propPath` defaults to `tagCriteria`.
+   * @returns A copy of the validated criteria.
+   * @throws Error when the list is empty, an entry is invalid, or a `tagKey` is duplicated.
+   */
+  public static resolveTagCriteria(
+    criteria: ConstructResourceTagCriteria[],
+    options: ConstructResourceCriteriaAssertOptions = {},
+  ): ConstructResourceTagCriteria[] {
+    const propPath = options.propPath ?? 'tagCriteria';
+
+    // An empty list is a list error. Per-entry checks never run.
+    if (criteria.length === 0) {
+      throw new Error(`${propPath} must contain at least one value.`);
+    }
+
+    const seenTagKeys = new Set<string>();
+    const normalized: ConstructResourceTagCriteria[] = [];
+
+    for (const [index, entry] of criteria.entries()) {
+      // Field errors win over a duplicate key on the same entry.
+      ConstructResourceCriteria.assertTagCriteria(entry, {
+        propPath: `${propPath}[${index}]`,
+      });
+
+      // Exact match, including surrounding spaces, so distinct keys stay distinct.
+      if (seenTagKeys.has(entry.tagKey)) {
+        throw new Error(`${propPath} contains duplicate tagKey: ${entry.tagKey}`);
+      }
+
+      seenTagKeys.add(entry.tagKey);
+      normalized.push({
+        tagKey: entry.tagKey,
+        tagValues: [...entry.tagValues],
+      });
+    }
+
+    return normalized;
   }
 }

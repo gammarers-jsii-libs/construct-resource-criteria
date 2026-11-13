@@ -3,13 +3,14 @@
 [![npm version](https://img.shields.io/npm/v/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
 [![license](https://img.shields.io/npm/l/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
 [![Node.js](https://img.shields.io/node/v/construct-resource-criteria?style=flat-square)](https://www.npmjs.com/package/construct-resource-criteria)
-[![build](https://img.shields.io/github/actions/workflow/status/gammarers-jsii-libs/aws-cdk-construct-resource-criteria/build.yml?label=build&style=flat-square)](https://github.com/gammarers-jsii-libs/aws-cdk-construct-resource-criteria/actions/workflows/build.yml)
+[![build](https://img.shields.io/github/actions/workflow/status/gammarers-jsii-libs/construct-resource-criteria/build.yml?label=build&style=flat-square)](https://github.com/gammarers-jsii-libs/construct-resource-criteria/actions/workflows/build.yml)
 
 Helpers for CDK construct resource criteria. Validate tag key/value criteria and reject blank strings in property paths.
 
 ## Features
 
 - Validate `ConstructResourceTagCriteria` tag key and values
+- Validate a list of tag criteria, reject an empty list and duplicate tag keys, and return a copy
 - Reject empty or whitespace-only strings and string lists
 - Include a property path in thrown `Error` messages
 
@@ -50,6 +51,22 @@ ConstructResourceCriteria.assertTagCriteria(criteria);
 ConstructResourceCriteria.assertTagCriteria(criteria, {
   propPath: 'props.tagCriteria',
 });
+
+const criteriaList: ConstructResourceTagCriteria[] = [
+  {
+    tagKey: 'Environment',
+    tagValues: ['production'],
+  },
+  {
+    tagKey: 'Notify',
+    tagValues: ['YES'],
+  },
+];
+
+const resolved = ConstructResourceCriteria.resolveTagCriteria(criteriaList);
+ConstructResourceCriteria.resolveTagCriteria(criteriaList, {
+  propPath: 'props.tags',
+});
 ```
 
 ## Options
@@ -58,7 +75,7 @@ ConstructResourceCriteria.assertTagCriteria(criteria, {
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `propPath` | `string` | Property path included in the error message (default: `tagCriteria`) |
+| `propPath` | `string` | Property path included in the error message. A single object uses a path such as `tagCriteria`. A list uses a path such as `props.tags` (default: `tagCriteria`) |
 
 ## API
 

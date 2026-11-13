@@ -19,7 +19,7 @@ const constructResourceCriteriaAssertOptions: ConstructResourceCriteriaAssertOpt
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions.property.propPath">propPath</a></code> | <code>string</code> | Property path included in the error message (for example, `tagCriteria`). |
+| <code><a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions.property.propPath">propPath</a></code> | <code>string</code> | Property path included in the error message. |
 
 ---
 
@@ -32,7 +32,10 @@ public readonly propPath: string;
 - *Type:* string
 - *Default:* tagCriteria
 
-Property path included in the error message (for example, `tagCriteria`).
+Property path included in the error message.
+
+A single object uses a path such as `tagCriteria`.
+A list uses a path such as `props.tags` (indexed as `props.tags[0]`).
 
 ---
 
@@ -108,6 +111,7 @@ new ConstructResourceCriteria()
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#construct-resource-criteria.ConstructResourceCriteria.assertTagCriteria">assertTagCriteria</a></code> | Throws if `criteria` has a blank tag key or an empty/blank tag value list. |
+| <code><a href="#construct-resource-criteria.ConstructResourceCriteria.resolveTagCriteria">resolveTagCriteria</a></code> | Validates a tag criteria list and returns a copy. |
 
 ---
 
@@ -134,6 +138,40 @@ Tag criteria to validate.
 - *Type:* <a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions">ConstructResourceCriteriaAssertOptions</a>
 
 Assertion options.
+
+---
+
+##### `resolveTagCriteria` <a name="resolveTagCriteria" id="construct-resource-criteria.ConstructResourceCriteria.resolveTagCriteria"></a>
+
+```typescript
+import { ConstructResourceCriteria } from 'construct-resource-criteria'
+
+ConstructResourceCriteria.resolveTagCriteria(criteria: ConstructResourceTagCriteria[], options?: ConstructResourceCriteriaAssertOptions)
+```
+
+Validates a tag criteria list and returns a copy.
+
+Rejects an empty list. Each entry is validated with
+{@link ConstructResourceCriteria.assertTagCriteria} before `tagKey` uniqueness
+is checked. `tagKey` values must be unique by exact match, without trimming.
+The result is a new array of new objects, each with a new `tagValues` array.
+The input list is left unchanged.
+
+###### `criteria`<sup>Required</sup> <a name="criteria" id="construct-resource-criteria.ConstructResourceCriteria.resolveTagCriteria.parameter.criteria"></a>
+
+- *Type:* <a href="#construct-resource-criteria.ConstructResourceTagCriteria">ConstructResourceTagCriteria</a>[]
+
+Tag criteria list to validate.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="construct-resource-criteria.ConstructResourceCriteria.resolveTagCriteria.parameter.options"></a>
+
+- *Type:* <a href="#construct-resource-criteria.ConstructResourceCriteriaAssertOptions">ConstructResourceCriteriaAssertOptions</a>
+
+Assertion options.
+
+`propPath` defaults to `tagCriteria`.
 
 ---
 
